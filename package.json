@@ -1,0 +1,86 @@
+{
+	"name": "pelifiidi-frontend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"dependencies": {
+		"apollo-boost": "^0.3.1",
+		"apollo-client": "^2.5.1",
+		"babel-core": "^6.26.3",
+		"babel-plugin-styled-components": "^1.10.0",
+		"date-fns": "^1.30.1",
+		"graphql": "^14.2.1",
+		"graphql-tag": "^2.10.1",
+		"next": "^8.0.4",
+		"next-with-apollo": "^3.4.0",
+		"nprogress": "^0.2.0",
+		"prop-types": "^15.7.2",
+		"react": "^16.8.6",
+		"react-apollo": "^2.5.4",
+		"react-dom": "^16.8.6",
+		"styled-components": "^4.2.0"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"dev": "next -p 7777",
+		"build": "next build",
+		"start": "next start",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"babel": {
+		"env": {
+			"development": {
+				"presets": [
+					"next/babel"
+				],
+				"plugins": [
+					[
+						"styled-components",
+						{
+							"ssr": true,
+							"displayName": true
+						}
+					]
+				]
+			},
+			"production": {
+				"presets": [
+					"next/babel"
+				],
+				"plugins": [
+					[
+						"styled-components",
+						{
+							"ssr": true,
+							"displayName": true
+						}
+					]
+				]
+			},
+			"test": {
+				"presets": [
+					[
+						"next/babel",
+						{
+							"preset-env": {
+								"modules": "commonjs"
+							}
+						}
+					]
+				],
+				"plugins": [
+					[
+						"styled-components",
+						{
+							"ssr": true,
+							"displayName": true
+						}
+					]
+				]
+			}
+		}
+	}
+}
