@@ -1,9 +1,10 @@
 import App, { Container } from 'next/app';
 import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
-import withData from '../lib/withData';
+//import withData from '../lib/withData';
+import withApolloClient from '../lib/with-apollo-client';
 
-class Pelifiidi extends App {
+class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {};
 		if (Component.getInitialProps) {
@@ -14,11 +15,11 @@ class Pelifiidi extends App {
 		return { pageProps };
 	}
 	render() {
-		const { Component, apollo, pageProps } = this.props;
-
+		const { Component, apolloClient, pageProps } = this.props;
+		console.log('PageProps for every page: ', pageProps);
 		return (
 			<Container>
-				<ApolloProvider client={apollo}>
+				<ApolloProvider client={apolloClient}>
 					<Page>
 						<Component {...pageProps} />
 					</Page>
@@ -27,5 +28,5 @@ class Pelifiidi extends App {
 		);
 	}
 }
-
-export default withData(Pelifiidi);
+export default withApolloClient(MyApp);
+//export default withData(MyApp);
