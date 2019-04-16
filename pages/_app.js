@@ -1,9 +1,15 @@
 import App, { Container } from 'next/app';
+import Router from 'next/router';
 import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
-
-//import withData from '../lib/withData';
+import NProgress from 'nprogress';
 import withApolloClient from '../lib/with-apollo-client';
+
+Router.events.on('routeChangeStart', (url) => {
+	NProgress.start();
+});
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
@@ -15,9 +21,9 @@ class MyApp extends App {
 		pageProps.query = ctx.query;
 		return { pageProps };
 	}
+
 	render() {
 		const { Component, apolloClient, pageProps } = this.props;
-		console.log('PageProps for every page: ', pageProps);
 		return (
 			<Container>
 				<ApolloProvider client={apolloClient}>

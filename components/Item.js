@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import ProgressiveImage from 'react-progressive-image';
+import Router from 'next/router';
+import ImagePlaceholder from './ImagePlaceholder';
+import Link from 'next/link';
 const StyledLi = styled.li`
 	list-style: 'none';
 	border: 1px solid red;
@@ -16,7 +19,7 @@ const StyledLi = styled.li`
 
 const ImgContainer = styled.div`
 	width: 100%;
-	height: 9rem;
+	height: 19rem;
 	position: relative;
 	border: 1px solid blue;
 `;
@@ -25,17 +28,28 @@ const StyledImg = styled.img`
 	height: 100%;
 	object-fit: cover;
 `;
+
 function Item({ item: { title, largeImg, smallImg } }) {
-	console.log('title: ');
-	// return <StyledLi largeImg={largeImg}>{title}</StyledLi>;
 	return (
-		<StyledLi>
-			<ImgContainer>
-				<StyledImg src={largeImg} />
-			</ImgContainer>
-			<h2>{title}</h2>
-			<p>{title}</p>
-		</StyledLi>
+		<Link href={{ pathname: 'detail' }}>
+			<a style={{ textDecoration: 'none', color: '#333' }}>
+				<StyledLi>
+					<ImgContainer>
+						<ProgressiveImage src={largeImg} placeholder="">
+							{(src, loading) => {
+								return loading ? (
+									<ImagePlaceholder src={smallImg} />
+								) : (
+									<StyledImg src={src} />
+								);
+							}}
+						</ProgressiveImage>
+					</ImgContainer>
+					<h2>{title}</h2>
+					<p>{title}</p>
+				</StyledLi>
+			</a>
+		</Link>
 	);
 }
 

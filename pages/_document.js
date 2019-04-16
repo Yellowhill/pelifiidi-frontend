@@ -32,7 +32,6 @@ export default class MyDocument extends Document {
 			<ThemeProvider theme={theme}>
 				<StyledHtml>
 					<Head>{this.props.styleTags}</Head>
-
 					<StyledBody>
 						<Main />
 						<NextScript />
