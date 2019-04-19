@@ -4,36 +4,33 @@ import gql from 'graphql-tag';
 import ErrorMessage from './ErrorMessage';
 
 const SIGNUP_MUTATION = gql`
-	mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
-		signup(email: $email, name: $name, password: $password) {
+	mutation SIGNIN_MUTATION($email: String!, $password: String!) {
+		Signin(email: $email, password: $password) {
 			id
 			email
-			name
 		}
 	}
 `;
 
-function Signup() {
+function Signin() {
 	const [email, setEmail] = useState('');
-	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 
-	async function handleSubmit(e, signup) {
+	async function handleSubmit(e, Signin) {
 		e.preventDefault();
-		await signup();
+		await Signin();
 		setEmail('');
-		setName('');
 		setPassword('');
 	}
 
 	return (
-		<Mutation mutation={SIGNUP_MUTATION} variables={{ email, name, password }}>
-			{(signup, { loading, error }) => {
+		<Mutation mutation={SIGNIN_MUTATION} variables={{ email, password }}>
+			{(Signin, { loading, error }) => {
 				if (error) return <ErrorMessage error={error} />;
 				return (
-					<form method="post" onSubmit={(e) => handleSubmit(e, signup)}>
+					<form method="post" onSubmit={(e) => handleSubmit(e, Signin)}>
 						<fieldset disabled={loading}>
-							<legend>Rekisteröinti</legend>
+							<legend>Kirjaudu</legend>
 							<div>
 								<label htmlFor="email" />
 								<input
@@ -42,16 +39,6 @@ function Signup() {
 									placeholder="sähköpostiosoite"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
-								/>
-							</div>
-							<div>
-								<label htmlFor="name" />
-								<input
-									type="text"
-									name="name"
-									placeholder="Nimi"
-									value={name}
-									onChange={(e) => setName(e.target.value)}
 								/>
 							</div>
 							<div>
@@ -64,7 +51,7 @@ function Signup() {
 									onChange={(e) => setPassword(e.target.value)}
 								/>
 							</div>
-							<button type="submit">Rekisteröidy!</button>
+							<button type="submit">Kirjaudu!</button>
 						</fieldset>
 					</form>
 				);
@@ -72,5 +59,5 @@ function Signup() {
 		</Mutation>
 	);
 }
-Signup.displayName = 'Signup';
-export default Signup;
+Signin.displayName = 'Signin';
+export default Signin;

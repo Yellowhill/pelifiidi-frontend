@@ -1,6 +1,6 @@
 import React from 'react';
 import Signup from '../components/Signup.js';
-
+import styled from 'styled-components';
 const Columns = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -8,11 +8,13 @@ const Columns = styled.div`
 `;
 
 function SignupPage() {
-	<Columns>
-		<Signup />
-		{/* <Signin />
+	return (
+		<Columns>
+			<Signup />
+			{/* <Signin />
     <RequestReset /> */}
-	</Columns>;
+		</Columns>
+	);
 }
 
 export default SignupPage;
