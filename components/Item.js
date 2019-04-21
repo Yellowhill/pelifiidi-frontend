@@ -1,9 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import ProgressiveImage from 'react-progressive-image';
-import Router from 'next/router';
-import ImagePlaceholder from './ImagePlaceholder';
 import Link from 'next/link';
+import { Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
+import ImagePlaceholder from './ImagePlaceholder';
+
+const ADD_BOOKMARK_MUTATION = gql`
+	mutation ADD_BOOKMARK_MUTATION($id: String!) {
+		addBookmark(id: $id) {
+			id
+			name
+			email
+			bookmarks {
+				id
+			}
+		}
+	}
+`;
+
 const StyledLi = styled.li`
 	list-style: 'none';
 	border: 1px solid red;
@@ -29,7 +44,17 @@ const StyledImg = styled.img`
 	object-fit: cover;
 `;
 
-function Item({ item: { title, largeImg, smallImg } }) {
+async function handleAddBookmark(e, addBookmark, id, client) {
+	e.preventDefault();
+	const result = await addBookmark();
+	console.log('handleAddBookmark: ', result);
+	//client.writeData()
+	return result;
+}
+
+function Item({ item: { title, largeImg, smallImg, id }, user }) {
+	const isBookmarked = user && user.bookmarks.find((bookmark) => bookmark.id === id);
+
 	return (
 		<Link href={{ pathname: 'detail' }}>
 			<a style={{ textDecoration: 'none', color: '#333' }}>
@@ -47,6 +72,25 @@ function Item({ item: { title, largeImg, smallImg } }) {
 					</ImgContainer>
 					<h2>{title}</h2>
 					<p>{title}</p>
+					{user && (
+						<>
+							{isBookmarked ? (
+								<p>Bookmarked</p>
+							) : (
+								<Mutation mutation={ADD_BOOKMARK_MUTATION} variables={{ id }}>
+									{(addBookmark, { loading, error, client }) => {
+										return (
+											<button
+												onClick={(e) => handleAddBookmark(e, addBookmark, id, client)}
+											>
+												bookmark
+											</button>
+										);
+									}}
+								</Mutation>
+							)}
+						</>
+					)}
 				</StyledLi>
 			</a>
 		</Link>
