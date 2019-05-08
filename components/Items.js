@@ -6,7 +6,8 @@ import NProgress from 'nprogress';
 import { Query } from 'react-apollo';
 
 import { ITEM_FRAGMENT } from '../graphql/fragments';
-import { ITEMS_QUERY } from './itemsQuery';
+import { ITEMS_QUERY } from './ItemsQuery';
+import { CURRENT_USER_QUERY_LOCAL } from './User';
 import Item from './Item';
 
 const ITEM_SUBSCRIPTION = gql`
@@ -14,20 +15,6 @@ const ITEM_SUBSCRIPTION = gql`
 		item(where: { mutation_in: [CREATED] }) {
 			mutation
 			node {
-				...ItemListInfo
-			}
-		}
-	}
-	${ITEM_FRAGMENT}
-`;
-
-const CURRENT_USER_QUERY_LOCAL = gql`
-	query CURRENT_USER_QUERY_LOCAL {
-		me @client {
-			id
-			name
-			email
-			bookmarks {
 				...ItemListInfo
 			}
 		}

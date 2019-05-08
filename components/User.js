@@ -15,6 +15,20 @@ const CURRENT_USER_QUERY = gql`
 	}
 `;
 
+const CURRENT_USER_QUERY_LOCAL = gql`
+	query CURRENT_USER_QUERY_LOCAL {
+		me @client {
+			id
+			name
+			email
+			bookmarks {
+				...ItemListInfo
+			}
+		}
+	}
+	${ITEM_FRAGMENT}
+`;
+
 function User(props) {
 	return (
 		<Query {...props} query={CURRENT_USER_QUERY}>
@@ -28,4 +42,4 @@ User.propTypes = {
 };
 
 export default User;
-export { CURRENT_USER_QUERY };
+export { CURRENT_USER_QUERY, CURRENT_USER_QUERY_LOCAL };
