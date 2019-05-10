@@ -31,20 +31,22 @@ const StyledImg = styled.img`
 	object-fit: cover;
 `;
 
-function Item({ item: { title, largeImg, smallImg, id }, user }) {
+function Item({ item: { title, largeImg, smallImg, id, website, slug }, user }) {
 	const isBookmarked = user && user.bookmarks.find((bookmark) => bookmark.id === id);
-
 	return (
-		<Link href={{ pathname: 'detail' }}>
+		<Link
+			href={{ pathname: 'detail', query: { otsikko: slug, id } }}
+			as={`uutinen?otsikko=${slug}`}
+		>
 			<a style={{ textDecoration: 'none', color: '#333' }}>
 				<StyledLi>
 					<ImgContainer>
 						<ProgressiveImage src={largeImg} placeholder="">
 							{(src, loading) => {
 								return loading ? (
-									<ImagePlaceholder src={smallImg} />
+									<ImagePlaceholder src={smallImg ? smallImg : ''} />
 								) : (
-									<StyledImg src={src} />
+									<StyledImg src={src ? src : ''} />
 								);
 							}}
 						</ProgressiveImage>

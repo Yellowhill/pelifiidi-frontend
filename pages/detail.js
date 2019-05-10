@@ -1,8 +1,10 @@
 import React from 'react';
 
+import Detail from '../components/Detail';
 function DetailPage() {
-	return <div>DetailPage</div>;
+	return <Detail />;
 }
 
 DetailPage.displayName = 'DetailPage';
+
 export default DetailPage;

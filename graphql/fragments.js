@@ -10,6 +10,7 @@ const ITEM_FRAGMENT = gql`
 		}
 		title
 		url
+		slug
 		smallImg
 		largeImg
 		author {
