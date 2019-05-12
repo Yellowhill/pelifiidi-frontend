@@ -43,6 +43,7 @@ function ItemsQuery() {
 								subscribeToMore={subscribeToMore}
 								fetchMore={fetchMore}
 								hasMoreItems={hasMoreItems}
+								apolloClient={client}
 							/>
 						);
 					}}

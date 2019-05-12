@@ -61,3 +61,37 @@ function Item({ item: { title, largeImg, smallImg, id, website, slug }, user }) 
 }
 
 export default Item;
+
+/**playground
+ * 
+ *
+ * 
+mutation {
+  createItem (
+    data:{
+  		title: "testi title",
+  		url: "testiurl1.com",
+  		publishDate: "2019-04-04T18:18:00.000Z",
+  		author: {
+        connect: {
+    			id: "5ca89c89a7b11b00076b4ec1"
+  		}}
+  		website: {
+    		connect: {
+      		id: "5ca89c89a7b11b00076b4ec0"
+    		}
+		  }
+		slug: "testi-slug"
+  		textContent: {
+    		create: [{
+    			text: "diu diu",
+    			inlineLinks: {
+      		create: []
+    			}
+  			}]
+  	}
+    }) {id title}
+}
+}
+ * 
+ */

@@ -9,6 +9,7 @@ import { ITEM_FRAGMENT } from '../graphql/fragments';
 import { ITEMS_QUERY } from './ItemsQuery';
 import { CURRENT_USER_QUERY_LOCAL } from './User';
 import Item from './Item';
+import updateLocalStorage from '../lib/updateLocalStorage';
 
 const ITEM_SUBSCRIPTION = gql`
 	subscription ITEM_SUBSCRIPTION {
@@ -36,7 +37,7 @@ const StyledUl = styled.ul`
 	padding: 0;
 `;
 
-function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true }) {
+function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true, apolloClient }) {
 	function fetchMoreItems() {
 		NProgress.start();
 		const skip = items.length;
@@ -64,6 +65,7 @@ function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true }) {
 				};
 				const newFeedItems = [newFeedItem, ...prev.itemsConnection.edges];
 				prev.itemsConnection.edges = newFeedItems;
+				updateLocalStorage(apolloClient);
 				return prev;
 			},
 		});
