@@ -33,6 +33,8 @@ function ItemsQuery() {
 						if (error) return <p>Error: {error}</p>;
 						if (loading) return <p>loading...</p>;
 						// console.log('itemsQuery.js - data: ', data);
+						// console.log('itemsQuery. PROCESS: ', process);
+
 						updateLocalStorage(client);
 						const items = data.itemsConnection.edges;
 						const hasMoreItems = data.itemsConnection.pageInfo.hasNextPage;
