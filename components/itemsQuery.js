@@ -30,12 +30,12 @@ function ItemsQuery() {
 			{(client) => (
 				<Query query={ITEMS_QUERY} variables={{ first: 5, skip: 0 }}>
 					{({ data, loading, error, subscribeToMore, fetchMore }) => {
-						if (error) return <p>Error: {error}</p>;
+						if (error) {
+							console.log('ITEMS_QUERY error: ', error);
+							return <p>Error {error}</p>;
+						}
 						if (loading) return <p>loading...</p>;
-						// console.log('itemsQuery.js - data: ', data);
-						// console.log('itemsQuery. PROCESS: ', process);
-
-						updateLocalStorage(client);
+						console.log('ITEMS_QUERY DATA:', data);
 						const items = data.itemsConnection.edges;
 						const hasMoreItems = data.itemsConnection.pageInfo.hasNextPage;
 

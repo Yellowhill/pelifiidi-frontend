@@ -39,6 +39,7 @@ const StyledUl = styled.ul`
 
 function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true, apolloClient }) {
 	function fetchMoreItems() {
+		console.log('FETCH MORE ITEMS CALLED');
 		NProgress.start();
 		const skip = items.length;
 		fetchMore({
