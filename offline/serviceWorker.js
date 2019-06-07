@@ -8,7 +8,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-	// console.log('service worker feeeeetch: ', event.request);
+	console.log('service worker feeeeetch: ', event.request);
 	// if Offline, return placeholder image
 	if (event.request.url.includes('livegamers')) {
 		const responsePromise = fetch('static/favicon.png');

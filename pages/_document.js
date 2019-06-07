@@ -1,11 +1,10 @@
 import Document, { Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
-import styled from 'styled-components';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider,ServerStyleSheet } from 'styled-components';
 
 const theme = {
 	bg: 'white',
 	baseFont: '16px ',
+	basePadding: '7px'
 };
 
 const StyledHtml = styled.html`
@@ -13,7 +12,7 @@ const StyledHtml = styled.html`
 `;
 
 const StyledBody = styled.body`
-	margin: 0.5rem;
+	margin: 0px;
 	background-color: ${(props) => props.theme.bg};
 `;
 

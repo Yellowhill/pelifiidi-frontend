@@ -17,6 +17,13 @@ const ITEM_FRAGMENT = gql`
 			id
 			name
 		}
+		textContent {
+			text
+			inlineLinks {
+				text
+				url
+			}
+		}
 		publishDate
 	}
 `;
