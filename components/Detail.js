@@ -8,14 +8,15 @@ import ErrorMessage from './ErrorMessage';
 import styled from 'styled-components';
 import DetailHeaderArea from './DetailHeaderArea';
 
-
-
 const DetailContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	background-color: black;
-	max-width: 1200;
+	max-width: 75rem;
+	max-height: 20rem;
+	margin: 0 auto;
+	border: 1px solid red;
 `;
 
 const DetailTitle = styled.h2``;
@@ -44,7 +45,7 @@ const ITEM_DETAIL_QUERY_LOCAL = gql`
 function Detail(props) {
 	const { otsikko, id } = props.router.query;
 	const itemQuery = id ? ITEM_DETAIL_QUERY_LOCAL : ITEM_DETAIL_QUERY;
-	console.log('Detail props: ', props)
+	console.log('Detail props: ', props);
 	return (
 		<>
 			<Query query={itemQuery} variables={{ slug: otsikko, id }}>
@@ -55,21 +56,21 @@ function Detail(props) {
 
 					return (
 						<DetailContainer>
-							<DetailHeaderArea item={data.item}/>
+							<DetailHeaderArea item={data.item} />
 						</DetailContainer>
 					);
 				}}
 			</Query>
 		</>
 	);
-};
+}
 
 Detail.propTypes = {
 	router: PropTypes.shape({
 		query: PropTypes.shape({
-		otsikko: PropTypes.string.isRequired,
-		id: PropTypes.string
-		})
-	})
+			otsikko: PropTypes.string.isRequired,
+			id: PropTypes.string,
+		}),
+	}),
 };
 export default withRouter(Detail);
