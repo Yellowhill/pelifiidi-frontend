@@ -6,7 +6,7 @@ import NProgress from 'nprogress';
 import { Query } from 'react-apollo';
 
 import { ITEM_FRAGMENT } from '../graphql/fragments';
-import { ITEMS_QUERY } from './ItemsQuery';
+import { ITEMS_QUERY } from '../pages/index';
 import { CURRENT_USER_QUERY_LOCAL } from './User';
 import Item from './Item';
 import updateLocalStorage from '../lib/updateLocalStorage';

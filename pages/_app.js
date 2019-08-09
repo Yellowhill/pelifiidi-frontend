@@ -4,12 +4,16 @@ import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
 import NProgress from 'nprogress';
 import withApolloClient from '../lib/with-apollo-client';
-
+import { ThemeProvider } from 'styled-components';
 Router.events.on('routeChangeStart', (url) => {
 	NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
+const theme = {
+	bg: 'white',
+	basePadding: '7px',
+};
 
 class MyApp extends App {
 	static async getInitialProps({ Component, ctx }) {
@@ -25,13 +29,15 @@ class MyApp extends App {
 	render() {
 		const { Component, apolloClient, pageProps } = this.props;
 		return (
-			<Container>
-				<ApolloProvider client={apolloClient}>
-					<Page>
-						<Component {...pageProps} />
-					</Page>
-				</ApolloProvider>
-			</Container>
+			<ThemeProvider theme={theme}>
+				<Container>
+					<ApolloProvider client={apolloClient}>
+						<Page>
+							<Component {...pageProps} />
+						</Page>
+					</ApolloProvider>
+				</Container>
+			</ThemeProvider>
 		);
 	}
 }

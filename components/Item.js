@@ -19,6 +19,14 @@ const StyledLi = styled.li`
 
 `;
 
+const StyledTitle = styled.h2`
+	padding-left: ${({ theme }) => theme.basePadding};
+`;
+
+const StyledDescription = styled.p`
+	padding-left: ${({ theme }) => theme.basePadding};
+`;
+
 const ImgContainer = styled.div`
 	width: 100%;
 	height: 19rem;
@@ -31,12 +39,15 @@ const StyledImg = styled.img`
 	object-fit: cover;
 `;
 
-function Item({ item: { title, largeImg, smallImg, id, website, slug }, user }) {
+function Item({
+	item: { title, largeImg, smallImg, id, website, description, slug },
+	user,
+}) {
 	const isBookmarked = user && user.bookmarks.find((bookmark) => bookmark.id === id);
 	return (
 		<Link
-			href={{ pathname: 'detail', query: { otsikko: slug, id } }}
-			as={`uutinen?otsikko=${slug}`}
+			href={{ pathname: '/detail', query: { id } }}
+			as={`uutinen/${website.name}/${slug}`}
 		>
 			<a style={{ textDecoration: 'none', color: '#333' }}>
 				<StyledLi>
@@ -51,8 +62,8 @@ function Item({ item: { title, largeImg, smallImg, id, website, slug }, user }) 
 							}}
 						</ProgressiveImage>
 					</ImgContainer>
-					<h2>{title}</h2>
-					<p>{title}</p>
+					<StyledTitle>{title}</StyledTitle>
+					<StyledDescription>{description}</StyledDescription>
 					{user && <Bookmark itemId={id} isBookmarked={isBookmarked} />}
 				</StyledLi>
 			</a>

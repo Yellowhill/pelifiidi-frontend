@@ -23,8 +23,9 @@ function Header() {
 		<ApolloConsumer>
 			{(client) => (
 				<User>
-					{({ data: { me } }) => {
-						console.log('header-user data - me: ', me);
+					{({ data }) => {
+						const me = data ? data.me : {};
+						console.log('header-user data - me: ', data);
 						return (
 							<Mutation mutation={SIGN_OUT_MUTATION}>
 								{(signout, { loading, error }) => {

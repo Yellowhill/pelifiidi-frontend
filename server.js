@@ -13,12 +13,19 @@ app.prepare().then(() => {
 		// This tells it to parse the query portion of the URL.
 		const parsedUrl = parse(req.url, true);
 		const { pathname, query } = parsedUrl;
-		// console.log('createServer pathname---------------: ', pathname);
+		//console.log('createServer pathname---------------: ', pathname);
+		// console.log('splitted first+++++++++++++++++++++: ', pathname.split('/')[1]);
 		// console.log('createServer query---------------: ', query);
 		if (pathname === '/sw.js') {
 			res.setHeader('content-type', 'text/javascript');
 			createReadStream('./offline/serviceWorker.js').pipe(res);
 		} else if (pathname.split('/')[1] === 'uutinen') {
+			console.log(
+				'path render query--------------------------------------------------------------------------------: ',
+				req.params,
+				query.title
+			);
+
 			app.render(req, res, '/detail', query);
 		} else {
 			handle(req, res, parsedUrl);

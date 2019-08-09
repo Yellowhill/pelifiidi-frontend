@@ -9,6 +9,7 @@ const ITEM_FRAGMENT = gql`
 			url
 		}
 		title
+		description
 		url
 		slug
 		smallImg

@@ -1,34 +1,13 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { Query, ApolloConsumer } from 'react-apollo';
 import Items from './Items';
-import { ITEM_FRAGMENT } from '../graphql/fragments';
 import updateLocalStorage from '../lib/updateLocalStorage';
-const ITEMS_QUERY = gql`
-	query ITEMS_QUERY($first: Int!, $skip: Int!) {
-		itemsConnection(orderBy: publishDate_DESC, first: $first, skip: $skip)
-			@connection(key: "item") {
-			edges {
-				node {
-					...ItemListInfo
-				}
-			}
-			pageInfo {
-				hasNextPage
-				# hasPreviousPage
-				# startCursor
-				# endCursor
-			}
-		}
-	}
-	${ITEM_FRAGMENT}
-`;
 
-function ItemsQuery() {
+function ItemsQuery({ query, variables }) {
 	return (
 		<ApolloConsumer>
 			{(client) => (
-				<Query query={ITEMS_QUERY} variables={{ first: 5, skip: 0 }}>
+				<Query query={query} variables={variables}>
 					{({ data, loading, error, subscribeToMore, fetchMore }) => {
 						if (error) {
 							console.log('ITEMS_QUERY error: ', error);
@@ -55,6 +34,5 @@ function ItemsQuery() {
 	);
 }
 
-export { ITEMS_QUERY };
 ItemsQuery.displayName = 'ItemsQuery';
 export default ItemsQuery;

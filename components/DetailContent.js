@@ -8,8 +8,8 @@ const ContentContainer = styled.div`
 function DetailContent({ textContent }) {
 	return (
 		<ContentContainer>
-			{textContent.map((paragraph) => {
-				return <p>{paragraph.text}</p>;
+			{textContent.map((paragraph, i) => {
+				return <p key={i}>{paragraph.text}</p>;
 			})}
 		</ContentContainer>
 	);
