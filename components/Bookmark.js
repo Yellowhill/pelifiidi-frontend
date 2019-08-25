@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 const TOGGLE_BOOKMARK_MUTATION = (add) => {
@@ -30,37 +30,33 @@ const TOGGLE_BOOKMARK_MUTATION = (add) => {
 		  `;
 };
 
-async function handleToggleBookmark(e, toggleBookmark) {
-	e.preventDefault();
-	const result = await toggleBookmark();
-	console.log('handleAddBookmark: ', result);
-	//client.writeData()
-	return result;
-}
-
 function Bookmark({ isBookmarked, itemId }) {
+	const [toggleBookmark, { loading, error, client }] = useMutation(
+		TOGGLE_BOOKMARK_MUTATION(isBookmarked ? false : true)
+	);
+	console.log('IS BOOKMARKED: ', isBookmarked);
 	return (
 		<>
 			{isBookmarked ? (
-				<Mutation mutation={TOGGLE_BOOKMARK_MUTATION(false)} variables={{ id: itemId }}>
-					{(toggleBookmark, { loading, error, client }) => {
-						return (
-							<button onClick={(e) => handleToggleBookmark(e, toggleBookmark)}>
-								remove bookmark
-							</button>
-						);
+				//<Mutation mutation={TOGGLE_BOOKMARK_MUTATION(false)} variables={{ id: itemId }}>
+
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						toggleBookmark({ variables: { id: itemId } });
 					}}
-				</Mutation>
+				>
+					remove bookmark
+				</button>
 			) : (
-				<Mutation mutation={TOGGLE_BOOKMARK_MUTATION(true)} variables={{ id: itemId }}>
-					{(toggleBookmark, { loading, error, client }) => {
-						return (
-							<button onClick={(e) => handleToggleBookmark(e, toggleBookmark)}>
-								add bookmark
-							</button>
-						);
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						toggleBookmark({ variables: { id: itemId } });
 					}}
-				</Mutation>
+				>
+					add bookmark
+				</button>
 			)}
 		</>
 	);

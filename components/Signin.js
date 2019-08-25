@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mutation, ApolloConsumer } from 'react-apollo';
+import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import ErrorMessage from './ErrorMessage';
 import Router from 'next/router';
@@ -22,6 +22,13 @@ const SIGNIN_MUTATION = gql`
 function Signin() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const client = useApolloClient();
+	const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
+		variables: { email, password },
+		onCompleted: ({ signin }) => {
+			client.writeData({ data: { me: signin } });
+		},
+	});
 
 	async function handleSubmit(e, signin) {
 		NProgress.start();
@@ -31,54 +38,37 @@ function Signin() {
 		setPassword('');
 		Router.push('/');
 	}
-
+	if (error) {
+		NProgress.done();
+	}
 	return (
-		<ApolloConsumer>
-			{(client) => (
-				<Mutation
-					mutation={SIGNIN_MUTATION}
-					variables={{ email, password }}
-					onCompleted={({ signin }) => {
-						client.writeData({ data: { me: signin } });
-					}}
-				>
-					{(signin, { loading, error }) => {
-						if (error) {
-							NProgress.done();
-						}
-						return (
-							<form method="post" onSubmit={(e) => handleSubmit(e, signin)}>
-								<fieldset disabled={loading}>
-									<legend>Kirjaudu</legend>
-									<ErrorMessage error={error} />
-									<div>
-										<label htmlFor="email" />
-										<input
-											type="email"
-											name="email"
-											placeholder="sähköpostiosoite"
-											value={email}
-											onChange={(e) => setEmail(e.target.value)}
-										/>
-									</div>
-									<div>
-										<label htmlFor="password" />
-										<input
-											type="password"
-											name="password"
-											placeholder="Salasana"
-											value={password}
-											onChange={(e) => setPassword(e.target.value)}
-										/>
-									</div>
-									<button type="submit">Kirjaudu!</button>
-								</fieldset>
-							</form>
-						);
-					}}
-				</Mutation>
-			)}
-		</ApolloConsumer>
+		<form method="post" onSubmit={(e) => handleSubmit(e, signin)}>
+			<fieldset disabled={loading}>
+				<legend>Kirjaudu</legend>
+				<ErrorMessage error={error} />
+				<div>
+					<label htmlFor="email" />
+					<input
+						type="email"
+						name="email"
+						placeholder="sähköpostiosoite"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+				</div>
+				<div>
+					<label htmlFor="password" />
+					<input
+						type="password"
+						name="password"
+						placeholder="Salasana"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+				</div>
+				<button type="submit">Kirjaudu!</button>
+			</fieldset>
+		</form>
 	);
 }
 Signin.displayName = 'Signin';

@@ -4,7 +4,6 @@ import styled, { withTheme } from 'styled-components';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import ProgressiveStyledImage from './ProgressiveStyledImage';
-import DetailContent from './DetailContent';
 
 const ImageContainer = styled.div`
 	height: 100%;

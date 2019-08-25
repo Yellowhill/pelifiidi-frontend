@@ -1,4 +1,4 @@
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import { ITEM_FRAGMENT } from '../graphql/fragments';
@@ -30,11 +30,8 @@ const CURRENT_USER_QUERY_LOCAL = gql`
 `;
 
 function User(props) {
-	return (
-		<Query {...props} query={CURRENT_USER_QUERY}>
-			{(payload) => props.children(payload)}
-		</Query>
-	);
+	const payload = useQuery(CURRENT_USER_QUERY);
+	return <>{props.children(payload)}</>;
 }
 
 User.propTypes = {

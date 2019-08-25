@@ -1,7 +1,8 @@
 import App, { Container } from 'next/app';
 import Router from 'next/router';
 import Page from '../components/Page';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
+
 import NProgress from 'nprogress';
 import withApolloClient from '../lib/with-apollo-client';
 import { ThemeProvider } from 'styled-components';
@@ -29,15 +30,15 @@ class MyApp extends App {
 	render() {
 		const { Component, apolloClient, pageProps } = this.props;
 		return (
-			<ThemeProvider theme={theme}>
-				<Container>
-					<ApolloProvider client={apolloClient}>
+			<ApolloProvider client={apolloClient}>
+				<ThemeProvider theme={theme}>
+					<Container>
 						<Page>
 							<Component {...pageProps} />
 						</Page>
-					</ApolloProvider>
-				</Container>
-			</ThemeProvider>
+					</Container>
+				</ThemeProvider>
+			</ApolloProvider>
 		);
 	}
 }

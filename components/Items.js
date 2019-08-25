@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroller';
 import NProgress from 'nprogress';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 
 import { ITEM_FRAGMENT } from '../graphql/fragments';
 import { ITEMS_QUERY } from '../pages/index';
@@ -38,6 +38,7 @@ const StyledUl = styled.ul`
 `;
 
 function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true, apolloClient }) {
+	const { data, loading, error } = useQuery(CURRENT_USER_QUERY_LOCAL);
 	function fetchMoreItems() {
 		console.log('FETCH MORE ITEMS CALLED');
 		NProgress.start();
@@ -74,21 +75,13 @@ function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true, apolloC
 	}, []);
 
 	return (
-		<Query query={CURRENT_USER_QUERY_LOCAL}>
-			{({ data }) => (
-				<InfiniteScroll
-					initialLoad={false}
-					loadMore={fetchMoreItems}
-					hasMore={hasMoreItems}
-				>
-					<StyledUl>
-						{items.map(({ node }) => (
-							<Item key={node.id} item={node} user={data.me} />
-						))}
-					</StyledUl>
-				</InfiniteScroll>
-			)}
-		</Query>
+		<InfiniteScroll initialLoad={false} loadMore={fetchMoreItems} hasMore={hasMoreItems}>
+			<StyledUl>
+				{items.map(({ node }) => (
+					<Item key={node.id} item={node} user={data.me} />
+				))}
+			</StyledUl>
+		</InfiniteScroll>
 	);
 }
 

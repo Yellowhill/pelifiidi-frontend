@@ -44,30 +44,33 @@ function Item({
 	user,
 }) {
 	const isBookmarked = user && user.bookmarks.find((bookmark) => bookmark.id === id);
+	console.log('ITEM-USER: ', user);
 	return (
-		<Link
-			href={{ pathname: '/detail', query: { id } }}
-			as={`uutinen/${website.name}/${slug}`}
-		>
-			<a style={{ textDecoration: 'none', color: '#333' }}>
-				<StyledLi>
-					<ImgContainer>
-						<ProgressiveImage src={largeImg} placeholder="">
-							{(src, loading) => {
-								return loading ? (
-									<ImagePlaceholder src={smallImg ? smallImg : ''} />
-								) : (
-									<StyledImg src={src ? src : ''} />
-								);
-							}}
-						</ProgressiveImage>
-					</ImgContainer>
-					<StyledTitle>{title}</StyledTitle>
-					<StyledDescription>{description}</StyledDescription>
-					{user && <Bookmark itemId={id} isBookmarked={isBookmarked} />}
-				</StyledLi>
-			</a>
-		</Link>
+		<div style={{ border: '2px solid black' }}>
+			<Link
+				href={{ pathname: '/detail', query: { id } }}
+				as={`uutinen/${website.name}/${slug}`}
+			>
+				<a style={{ textDecoration: 'none', color: '#333' }}>
+					<StyledLi>
+						<ImgContainer>
+							<ProgressiveImage src={largeImg} placeholder="">
+								{(src, loading) => {
+									return loading ? (
+										<ImagePlaceholder src={smallImg ? smallImg : ''} />
+									) : (
+										<StyledImg src={src ? src : ''} />
+									);
+								}}
+							</ProgressiveImage>
+						</ImgContainer>
+						<StyledTitle>{title}</StyledTitle>
+						<StyledDescription>{description}</StyledDescription>
+					</StyledLi>
+				</a>
+			</Link>
+			{user && <Bookmark itemId={id} isBookmarked={isBookmarked} />}
+		</div>
 	);
 }
 

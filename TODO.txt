@@ -1,1 +1,3 @@
-TODO if offline, fetch more from the localStorage
+TODO 
+Transform User-component to custon userHook!
+if offline, fetch more from the localStorage
