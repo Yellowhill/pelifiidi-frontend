@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { ITEM_FRAGMENT } from '../graphql/fragments';
 import { ITEMS_QUERY } from '../pages/index';
-import { CURRENT_USER_QUERY_LOCAL } from './User';
+import useUser from '../hooks/useUser';
 import Item from './Item';
 import updateLocalStorage from '../lib/updateLocalStorage';
 
@@ -38,7 +38,7 @@ const StyledUl = styled.ul`
 `;
 
 function Items({ items, subscribeToMore, fetchMore, hasMoreItems = true, apolloClient }) {
-	const { data, loading, error } = useQuery(CURRENT_USER_QUERY_LOCAL);
+	const { data, loading, error } = useUser();
 	function fetchMoreItems() {
 		console.log('FETCH MORE ITEMS CALLED');
 		NProgress.start();

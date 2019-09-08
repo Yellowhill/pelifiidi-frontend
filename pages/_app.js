@@ -1,4 +1,4 @@
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Router from 'next/router';
 import Page from '../components/Page';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -32,11 +32,9 @@ class MyApp extends App {
 		return (
 			<ApolloProvider client={apolloClient}>
 				<ThemeProvider theme={theme}>
-					<Container>
-						<Page>
-							<Component {...pageProps} />
-						</Page>
-					</Container>
+					<Page>
+						<Component {...pageProps} />
+					</Page>
 				</ThemeProvider>
 			</ApolloProvider>
 		);

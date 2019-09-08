@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import PropTypes from 'prop-types';
 import { ITEM_FRAGMENT } from '../graphql/fragments';
 const CURRENT_USER_QUERY = gql`
 	query CURRENT_USER_QUERY {
@@ -29,14 +28,9 @@ const CURRENT_USER_QUERY_LOCAL = gql`
 	${ITEM_FRAGMENT}
 `;
 
-function User(props) {
-	const payload = useQuery(CURRENT_USER_QUERY);
-	return <>{props.children(payload)}</>;
+function useUser() {
+	return useQuery(CURRENT_USER_QUERY);
 }
 
-User.propTypes = {
-	children: PropTypes.func.isRequired,
-};
-
-export default User;
+export default useUser;
 export { CURRENT_USER_QUERY, CURRENT_USER_QUERY_LOCAL };

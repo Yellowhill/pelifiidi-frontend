@@ -58,9 +58,9 @@ function DetailHeaderArea({
 					<a>{website.name}</a>
 				</Link>
 				<span> - </span>
-				{/* <Link>
+				<Link href="/authorSpecificNews" as={`/${website.name}/${author.name}`}>
 					<a>{author.name}</a>
-				</Link> */}
+				</Link>
 
 				<LinkToSource href={url} target="_blank">
 					Lue lähteessä

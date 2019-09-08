@@ -3,8 +3,7 @@ import gql from 'graphql-tag';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import Router from 'next/router';
 import Link from 'next/link';
-import User from './User';
-
+import useUser from '../hooks/useUser';
 const SIGN_OUT_MUTATION = gql`
 	mutation SIGN_OUT_MUTATION {
 		signout {
@@ -21,32 +20,25 @@ async function handleSignout(signout, client) {
 function Header() {
 	const [signout, { loading, error }] = useMutation(SIGN_OUT_MUTATION);
 	const client = useApolloClient();
+	const { data } = useUser();
+	const me = data ? data.me : {};
+	console.log('HEADER useUser data: ', data);
 	return (
-		<User>
-			{({ data }) => {
-				const me = data ? data.me : {};
-				console.log('header-user data - me: ', data);
-				return (
-					<div>
-						<Link href="/">
-							<a>Pelifiidi</a>
-						</Link>
-						{me && (
-							<>
-								<button onClick={() => handleSignout(signout, client)}>
-									kirjaudu ulos
-								</button>
-							</>
-						)}
-						{!me && (
-							<Link href="/signup">
-								<a>Kirjaudu</a>
-							</Link>
-						)}
-					</div>
-				);
-			}}
-		</User>
+		<div>
+			<Link href="/">
+				<a>Pelifiidi</a>
+			</Link>
+			{me && (
+				<>
+					<button onClick={() => handleSignout(signout, client)}>kirjaudu ulos</button>
+				</>
+			)}
+			{!me && (
+				<Link href="/signup">
+					<a>Kirjaudu</a>
+				</Link>
+			)}
+		</div>
 	);
 }
 

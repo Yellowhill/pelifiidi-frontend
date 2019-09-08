@@ -13,7 +13,7 @@ const ALL_WEBSITE_ITEMS_QUERY = gql`
 			orderBy: publishDate_DESC
 			first: $first
 			skip: $skip
-		) @connection(key: "item") {
+		) {
 			edges {
 				node {
 					...ItemListInfo

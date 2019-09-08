@@ -1,3 +1,4 @@
 TODO 
 Transform User-component to custon userHook!
+FIX SUBSCRITPIONS!
 if offline, fetch more from the localStorage
